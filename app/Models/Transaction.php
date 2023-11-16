@@ -8,11 +8,12 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 use App\Enums\TransactionStatus;
+use App\Traits\FilterTrait;
 use Carbon\Carbon;
 
 class Transaction extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletes, FilterTrait;
 
     protected $fillable = ['user_id', 'due_on', 'status', 'amount','vat', 'is_vat_inclusive'];
 
@@ -57,6 +58,11 @@ class Transaction extends Model
         return Attribute::make(
             get: fn () => $this->payments()->sum('amount')
         );
+    }
+
+    public function scopeUserId($query, $id)
+    {
+        return $query->where('user_id', $id);
     }
 
     /**
