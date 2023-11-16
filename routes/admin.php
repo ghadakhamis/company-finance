@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\LoginController;
 use App\Http\Controllers\Admin\TransactionController;
+use App\Http\Controllers\Admin\PaymentController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -22,6 +23,7 @@ Route::name('admin.')->prefix('v1')->group(
         Route::group(
             ['middleware' => ['auth:admin']], function () {
                 Route::apiResource('transactions', TransactionController::class)->only('store');
+                Route::apiResource('transactions.payments', PaymentController::class)->only('store');
             }
         );
     }
