@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Http\Resources\UserResource;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -48,9 +49,14 @@ class User extends Authenticatable
 
     protected $guard = 'user';
 
-    public function setPasswordAttribute($value)
+    /**
+     * Interact with the user's password.
+     */
+    protected function password(): Attribute
     {
-        $this->attributes['password'] = Hash::make($value);
+        return Attribute::make(
+            set: fn (string $value) => Hash::make($value),
+        );
     }
 
     /**

@@ -3,6 +3,8 @@
 namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Auth\AuthenticationException;
+use Illuminate\Http\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Throwable;
 
@@ -27,6 +29,13 @@ class Handler extends ExceptionHandler
         $this->reportable(function (Throwable $e) {
             //
         });
+        $this->renderable(
+            function (AuthenticationException $exception, $request) {
+                return response()->json(
+                    ['message' => trans('auth.unauthorized'), 'errors' => null], Response::HTTP_UNAUTHORIZED
+                );  
+            }
+        );
         $this->renderable(
             function (HttpException $exception, $request) {
                 return response()->json(

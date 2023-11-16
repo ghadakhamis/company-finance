@@ -188,5 +188,7 @@ return [
     'attributes' => [
         'email'    => 'email',
         'password' => 'password',
+        'phone'    => 'phone',
+        'user_id'  => 'user id',
     ],
 ];
