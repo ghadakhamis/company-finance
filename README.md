@@ -38,6 +38,8 @@ MAIL_ENCRYPTION=tls
 MAIL_FROM_ADDRESS={{email}}
 MAIL_FROM_NAME="${APP_NAME}"
 
+ADMIN_EMAIL={{admin_email}}
+ADMIN_PASSWORD={{admin_password}}
   ```
 c. Install all the dependencies using composer
 
@@ -63,6 +65,11 @@ g. For local development server
 ```bash
   php artisan serve
   ```                                                                                                  
+h. For create test user
+```bash
+  php artisan db:seed --class=UserSeeder
+```
+
 You can now access the server at http://localhost:8000     
 
 You can access the API documentation at https://documenter.getpostman.com/view/5872734/2s9YXo1eWL
