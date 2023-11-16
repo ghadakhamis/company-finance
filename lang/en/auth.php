@@ -19,6 +19,9 @@ return [
     'login' => [
         'success' => 'You have successfuly login',
         'fail'    => 'These credentials are not valid.',
-    ] 
+    ],
+    'create' => [
+        'success' => 'The model have successfuly created',
+    ],
 
 ];

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\LoginController;
+use App\Http\Controllers\Admin\TransactionController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -17,5 +18,11 @@ use Illuminate\Support\Facades\Route;
 Route::name('admin.')->prefix('v1')->group(
     function () {
         Route::post('login', [LoginController::class, 'login'])->name('login');
+
+        Route::group(
+            ['middleware' => ['auth:admin']], function () {
+                Route::apiResource('transactions', TransactionController::class)->only('store');
+            }
+        );
     }
 );
