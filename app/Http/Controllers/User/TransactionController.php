@@ -1,9 +1,8 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreTransactionRequest;
 use App\Http\Requests\SearchTransactionRequest;
 use App\Http\Resources\TransactionCollection;
 use App\Http\Filters\TransactionFilter;
@@ -22,15 +21,9 @@ class TransactionController extends Controller
         $this->service = $service;
     }
 
-    public function store(StoreTransactionRequest $request): JsonResponse
-    {
-        $resource = $this->service->create($request->validated());
-        return response()->json(['message' => trans('auth.create.success'), 'data' => $resource], Response::HTTP_OK);
-    }
-
     public function index(TransactionFilter $filter, SearchTransactionRequest $request)
     {
-        $result = $this->service->filter($filter);
+        $result = $this->service->userFilter($filter);
         return new TransactionCollection($result);
     }
 }

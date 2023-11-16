@@ -22,7 +22,7 @@ Route::name('admin.')->prefix('v1')->group(
 
         Route::group(
             ['middleware' => ['auth:admin']], function () {
-                Route::apiResource('transactions', TransactionController::class)->only('store');
+                Route::apiResource('transactions', TransactionController::class)->only('store','index');
                 Route::apiResource('transactions.payments', PaymentController::class)->only('store');
             }
         );

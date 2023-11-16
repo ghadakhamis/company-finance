@@ -9,7 +9,7 @@ use Lang;
 
 abstract class Filter
 {
-    public $orders = array('asc', 'desc');
+    public $orders = ['asc', 'desc'];
 
     /**
      * @var Request

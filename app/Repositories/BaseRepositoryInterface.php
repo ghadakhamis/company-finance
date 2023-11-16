@@ -12,7 +12,7 @@ interface BaseRepositoryInterface
      * @param  array $columns
      * @return mixed
      */
-    public function all($columns = array('*'));
+    public function all($columns = ['*']);
 
     /**
      * @param  array $data
@@ -45,7 +45,7 @@ interface BaseRepositoryInterface
      * @param  array $columns
      * @return mixed
      */
-    public function find($id, $columns = array('*'));
+    public function find($id, $columns = ['*']);
 
     /**
      * @param  $field
@@ -53,5 +53,5 @@ interface BaseRepositoryInterface
      * @param  array $columns
      * @return mixed
      */
-    public function findBy($field, $value, $columns = array('*'));
+    public function findBy($field, $value, $columns = ['*']);
 }
