@@ -23,5 +23,6 @@ return [
     'create' => [
         'success' => 'The model have successfuly created',
     ],
+    'unauthorized' => 'Unauthenticated',
 
 ];
