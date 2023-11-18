@@ -36,4 +36,9 @@ class TransactionService extends BaseService
         $this->repository->setScopes(['userId' => Auth::user()->id]);
         return $this->filter($filter);
     }
+
+    public function statisticsReport(TransactionFilter $filter)
+    {
+        return $this->repository->statisticsReport($filter);
+    }
 }

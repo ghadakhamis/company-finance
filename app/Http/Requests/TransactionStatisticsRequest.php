@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class SearchTransactionRequest extends FormRequest
+class TransactionStatisticsRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,9 +22,10 @@ class SearchTransactionRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'page'    => 'nullable|integer',
-            'user_id' => 'nullable|exists:users,id,deleted_at,NULL',
-            'sort'    => 'nullable|string',
+            'page'       => 'nullable|integer',
+            'start_date' => 'nullable|date|date_format:Y-m-d',
+            'end_date'   => 'nullable|date|date_format:Y-m-d',
+            'sort'       => 'nullable|string',
         ];
     }
 }
