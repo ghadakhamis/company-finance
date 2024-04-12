@@ -5,7 +5,8 @@ namespace App\Services;
 use App\Repositories\TransactionRepository;
 use App\Http\Filters\TransactionFilter;
 use App\Models\Transaction;
-use Auth;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class TransactionService extends BaseService
 {
@@ -14,9 +15,14 @@ class TransactionService extends BaseService
         $this->setRepository($repository);
     }
 
-    public function create($data)
+    /**
+     * Summary of create
+     * @param array $data
+     * @return Model
+     */
+    public function create(Array $data): Model
     {
-        $this->repository->create($data);
+        return $this->repository->create($data);
     }
 
     public function update(Array $data, Transaction $transaction)

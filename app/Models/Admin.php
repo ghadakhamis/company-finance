@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
-use Hash;
+use Illuminate\Support\Facades\Hash;
 
 class Admin extends Authenticatable
 {

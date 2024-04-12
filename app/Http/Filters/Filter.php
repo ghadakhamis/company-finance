@@ -3,9 +3,7 @@
 namespace App\Http\Filters;
 
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Http\Response;
 use Illuminate\Http\Request;
-use Lang;
 
 abstract class Filter
 {
@@ -16,6 +14,15 @@ abstract class Filter
      */
     protected $request;
 
+    /**
+     * @var array $filters
+     */
+    protected $filters;
+
+    /**
+     * @var array $fields
+     */
+    protected $fields;
     /**
      * @var Builder
      */
@@ -57,7 +64,7 @@ abstract class Filter
     /**
      * Sort the services by the given order and field.
      *
-     * @param array $value
+     * @param string $value
      */
     public function sort(string $value)
     {

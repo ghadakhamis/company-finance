@@ -2,12 +2,19 @@
 
 namespace App\Http\Filters;
 
-use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Http\Request;
 
 class TransactionFilter extends Filter
 {
-    public $filters = ['user_id', 'start_date', 'end_date', 'sort'];
-    public $fields = ['created_at', 'year', 'month'];
+     /**
+     * @param Request $request
+     * */
+    public function __construct(Request $request)
+    {
+        parent::__construct($request);
+        $this->filters = ['user_id', 'start_date', 'end_date', 'sort'];
+        $this->fields  = ['created_at', 'year', 'month'];
+    }
 
     /**
      * @param string $userId

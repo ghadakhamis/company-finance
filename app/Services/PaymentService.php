@@ -4,7 +4,7 @@ namespace App\Services;
 
 use App\Enums\TransactionStatus;
 use App\Repositories\PaymentRepository;
-use App\Models\Payment;
+use Illuminate\Database\Eloquent\Model;
 
 class PaymentService extends BaseService
 {
@@ -13,14 +13,16 @@ class PaymentService extends BaseService
         $this->setRepository($repository);
     }
 
-    public function create($data, $transaction)
+    public function create($data, $transaction): Model
     {
-        $transaction->payments()->create($data);
+        $payment = $transaction->payments()->create($data);
 
         if ($transaction->total_amount == $transaction->paid_amount) {
             app(TransactionService::class)->update(
                 ['status' => TransactionStatus::PAID], $transaction
             );
         }
+
+        return $payment;
     }
 }
