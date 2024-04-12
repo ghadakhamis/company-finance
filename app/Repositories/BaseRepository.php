@@ -3,9 +3,9 @@
 namespace App\Repositories;
 
 use Illuminate\Container\Container as App;
+use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Collection;
 use Illuminate\Database\Query\Builder;
-use App\Exceptions\RepositoryException;
 use Illuminate\Database\Eloquent\Model;
 use App\Http\Filters\Filter;
 
@@ -14,7 +14,7 @@ abstract class BaseRepository implements BaseRepositoryInterface
     protected $model;
 
     /**
-     * @var JsonResource | ResourceCollection
+     * @var JsonResource | ResourceCollection $resource
      */
     protected $resource;
 
@@ -196,13 +196,13 @@ abstract class BaseRepository implements BaseRepositoryInterface
     public function update(array $data, $id = null, $force = true, $returnFresh = true, $withTrashed = false)
     {
         if (is_null($id) and $this->model instanceof Builder) {
-            $object = $withTrashed ? $this->withTrashed()->first() : $this->first();
+            $object = $withTrashed ? $this->model->withTrashed()->first() : $this->model->first();
             $model = $object;
         } elseif ($id && is_object($id) && is_subclass_of($id, Model::class)) {
             $model = $id;
             $object = $model;
         } else {
-            $object = $withTrashed ? $this->withTrashed()->find($id) : $this->find($id);
+            $object = $withTrashed ? $this->model->withTrashed()->find($id) : $this->find($id);
             $model = $object;
         }
 
@@ -235,7 +235,7 @@ abstract class BaseRepository implements BaseRepositoryInterface
         } elseif (!is_null($id)) {
             $model = $this->find($id, ['*'], true)->delete();
         } elseif ($this->model instanceof Builder) {
-            $model = $this->first()->delete();
+            $model = $this->model->first()->delete();
         }
         $this->cleanRepository();
 
@@ -254,39 +254,13 @@ abstract class BaseRepository implements BaseRepositoryInterface
     protected function cleanRepository()
     {
         $this->scopes = [];
-        $this->criteria = new Collection();
         $this->makeModel();
-        $this->makeResource();
     }
 
     protected function makeModel()
     {        
         $model = $this->app->make($this->model());
-
-        if (!$model instanceof Model) {
-            throw new RepositoryException(
-                "Class {$this->model()} must be an instance of Illuminate\\Database\\Eloquent\\Model"
-            );
-        }
-
         return $this->model = $model;
-    }
-
-    public function makeResource()
-    {
-        if ($this->resource) {
-            if (!is_subclass_of($this->resource, 'Illuminate\Http\Resources\Json\ResourceCollection')
-                && !is_subclass_of($this->resource, 'Illuminate\Http\Resources\Json\JsonResource')
-            ) {
-                throw new RepositoryException(
-                    "Class {$this->resource} must be an instance of 
-                    Illuminate\\Http\\Resources\\Json\\ResourceCollection or
-                    Illuminate\Http\Resources\Json\JsonResource"
-                );
-            }
-        }
-
-        return $this->resource;
     }
 
     protected function applyScopes($model)

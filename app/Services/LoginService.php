@@ -3,7 +3,7 @@
 namespace App\Services;
 
 use Illuminate\Http\Response;
-use Hash;
+use Illuminate\Support\Facades\Hash;
 
 class LoginService extends BaseService
 {
